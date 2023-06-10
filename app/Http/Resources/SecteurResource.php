@@ -16,7 +16,7 @@ class SecteurResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'nom_secteur' => $this->nom_secteur,
+            'nom_secteur' => $this->nom,
             /*'demandes' => DemandeResource::collection($this->demandes),
             'employeurs' => EmployeurResource::collection($this->employeurs),*/
             'created_at' => $this->created_at,

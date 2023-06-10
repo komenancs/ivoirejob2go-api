@@ -26,9 +26,7 @@ class PjRequest extends FormRequest
     {
         return [
             'message_id' => 'required|integer',
-            'filename' => 'required|string',
-            'extension' => 'required|string|max:7',
-            'path' => 'required|string',
+            'file' => 'required|mimes:jpg,png,jpeg',
         ];
     }
 

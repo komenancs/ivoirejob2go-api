@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\ApiResponser;
+use App\Utils\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -43,11 +44,6 @@ class AuthController extends Controller
         return $this->createNewToken(Auth::user()->createToken('token')->plainTextToken);
     }
 
-    /**
-     * Register a User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function register(Request $request) {
         $validator = Validator::make($request->all(),
             [
@@ -63,17 +59,20 @@ class AuthController extends Controller
                 'twitter' => 'nullable|url',
                 'instagram' => 'nullable|url',
                 'date_verification_email' => 'nullable|date',
-                'role_id' => 'required|interger',
-                'localisation_id'  => 'required|integer',
+                'role_id' => 'nullable|interger',
+                'localisation_id'  => 'nullable|integer',
                 'remember_token' => 'nullable|datetime',
                 'email_verified_at' => 'nullable|datetime',
             ]);
         if($validator->fails()){
             return $this->getErrorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
         }
+        if ($request->hasFile('photo')){
+            $photo = $request->file('photo')->storeAs('user_photos', Utils::slugify($request->photo->getClientOriginalName()) . "." . $request->photo->getClientOriginalExtension());
+        }
         $user = User::create(array_merge(
-                    $validator->validated(),
-                    ['password' => bcrypt($request->password)]
+                    $validator->safe()->except(['photo']),
+                    ['password' => bcrypt($request->password), 'photo' => $photo ?? null]
                 ));
         return (new UserResource($user))->additional($this->getResponseTemplate(Response::HTTP_OK, "User successfully registered"));
     }

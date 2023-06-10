@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EmployeurRequest;
 use App\Models\Employeur;
 use App\Traits\ApiResponser;
+use App\Utils\Utils;
 use Illuminate\Http\Request;
 use App\Http\Resources\EmployeurCollection;
 use App\Http\Resources\EmployeurResource;
@@ -27,7 +28,12 @@ class EmployeurController extends Controller
      */
     public function store(EmployeurRequest $request)
     {
-        $employeur = Employeur::create($request->validated());
+        if ($request->hasFile('logo')){
+            $logo = $request->file('logo')->storeAs(
+                'employeur_logos', Utils::slugify($request->file('logo')->getClientOriginalName()) . "." . $request->file('logo')->getClientOriginalExtension()
+            );
+        }
+        $employeur = Employeur::create(array_merge($request->safe()->except(['logo',]), ["logo" => $logo ?? null]));
         return (new EmployeurResource($employeur))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -50,7 +56,12 @@ class EmployeurController extends Controller
         if (!$employeur) {
             return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
         }
-        $employeur->update($request->validated());
+        if ($request->hasFile('logo')){
+            $logo = $request->file('logo')->storeAs(
+                'employeur_logos', Utils::slugify($request->file('logo')->getClientOriginalName()) . "." . $request->file('logo')->getClientOriginalExtension()
+            );
+        }
+        $employeur->update(array_merge($request->safe()->except(['logo',]), ["logo" => $logo ?? null]));
         return ( new EmployeurResource($employeur))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 

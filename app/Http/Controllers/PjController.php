@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pj;
 use App\Traits\ApiResponser;
+use App\Utils\Utils;
 use Illuminate\Http\Request;
 use App\Http\Requests\PjRequest;
 use App\Http\Resources\PjResource;
@@ -22,13 +23,22 @@ class PjController extends Controller
         return ( new PjCollection($pjs))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
-    
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(PjRequest $request)
     {
-        $pj = Pj::create($request->validated());
+        if ($request->hasFile('file')){
+            $file = $request->file('file')->storeAs(
+                'pj_files', Utils::slugify($request->file('file')->getClientOriginalName()) . "." . $request->file('file')->getClientOriginalExtension()
+            );
+        }
+        $pj = Pj::create(array_merge($request->safe()->except('file'), [
+            'filename' => $request->file('file')->getClientOriginalName(),
+            'extension' => $request->file('file')->getClientOriginalExtension(),
+            'path' => $file ?? null
+        ]));
         return (new PjResource($pj))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -51,7 +61,16 @@ class PjController extends Controller
         if (!$pj) {
             return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
         }
-        $pj->update($request->validated());
+        if ($request->hasFile('file')){
+            $file = $request->file('file')->storeAs(
+                'pj_files', Utils::slugify($request->file('file')->getClientOriginalName()) . "." . $request->file('file')->getClientOriginalExtension()
+            );
+        }
+        $pj->update(array_merge($request->safe()->except('file'), [
+            'filename' => $request->file('file')->getClientOriginalName(),
+            'extension' => $request->file('file')->getClientOriginalExtension(),
+            'path' => $file ?? null
+        ]));
         return ( new PjResource($pj))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 

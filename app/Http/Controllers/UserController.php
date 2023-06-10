@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Traits\ApiResponser;
+use App\Utils\Utils;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserCollection;
@@ -50,7 +51,19 @@ class UserController extends Controller
         if (!$user) {
             return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
         }
-        $user->update($request->validated());
+
+        if ($request->hasFile('photo')){
+           $photo = $request->file('photo')->storeAs(
+               'user_photos', Utils::slugify(
+                   $user->name . " " . $user->surname . " " . $request->file('photo')->getClientOriginalName()
+           ) . "." . $request->file('photo')->getClientOriginalExtension()
+           );
+        }
+
+        $user->update(User::create(array_merge(
+            $request->safe()->except(['photo',]),
+            ['photo' => $photo ?? null]
+        )));
         return ( new UserResource($user))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 

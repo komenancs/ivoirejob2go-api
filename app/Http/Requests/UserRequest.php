@@ -37,8 +37,8 @@ class UserRequest extends FormRequest
             'twitter' => 'nullable|url',
             'instagram' => 'nullable|url',
             'date_verification_email' => 'nullable|date',
-            'role_id' => 'required|interger',
-            'localisation_id'  => 'required|integer',
+            'role_id' => 'nullable|interger',
+            'localisation_id'  => 'nullable|integer',
             'remember_token' => 'nullable|datetime',
             'email_verified_at' => 'nullable|datetime',
         ];
