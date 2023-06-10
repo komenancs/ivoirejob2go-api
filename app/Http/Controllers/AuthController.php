@@ -49,11 +49,25 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:2,100',
-            'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|confirmed|min:6',
-        ]);
+        $validator = Validator::make($request->all(),
+            [
+                'name' => 'required|string',
+                'email' => 'required|string|email|max:100|unique:users',
+                'surname' => 'required|string',
+                'password' => 'required|string|confirmed|min:6',
+                'telephone' => 'nullable|string',
+                'nom_entreprise' => 'nullable|string',
+                'poste_occupe' => 'nullable|string',
+                'photo' => 'nullable|mimes:jpg,bmp,png',
+                'linkedin' => 'nullable|url',
+                'twitter' => 'nullable|url',
+                'instagram' => 'nullable|url',
+                'date_verification_email' => 'nullable|date',
+                'role_id' => 'required|interger',
+                'localisation_id'  => 'required|integer',
+                'remember_token' => 'nullable|datetime',
+                'email_verified_at' => 'nullable|datetime',
+            ]);
         if($validator->fails()){
             return $this->getErrorResponse(Response::HTTP_BAD_REQUEST, $validator->errors());
         }

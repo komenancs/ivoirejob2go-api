@@ -18,6 +18,7 @@ class EmployeurFactory extends Factory
     {
         return [
             'user_id' => $this->faker->numberBetween(1, 10),
+            'nom' => fake()->company(),
             'localisation_id' => $this->faker->randomDigitNotNull(),
             'description' => $this->faker->sentence(5),
             'logo' => $this->faker->imageUrl(360, 360, 'animals', true, 'cats'),

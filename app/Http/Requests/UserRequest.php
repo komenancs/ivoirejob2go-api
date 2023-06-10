@@ -32,7 +32,7 @@ class UserRequest extends FormRequest
             'telephone' => 'nullable|string',
             'nom_entreprise' => 'nullable|string',
             'poste_occupe' => 'nullable|string',
-            'photo' => 'mimes:jpg,bmp,png',
+            'photo' => 'nullable|mimes:jpg,bmp,png',
             'linkedin' => 'nullable|url',
             'twitter' => 'nullable|url',
             'instagram' => 'nullable|url',
