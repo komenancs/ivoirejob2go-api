@@ -28,6 +28,7 @@ class EmployeurRequest extends FormRequest
             'user_id' => 'required|integer',
             'localisation_id' => 'required|integer',
             'description' => 'nullable|string',
+            'nom' => 'nullable|string',
             'logo' => 'mimes:jpg,bmp,png',
             'email'  => 'nullable|string',
             'contact_1' => 'required|string|max:20',

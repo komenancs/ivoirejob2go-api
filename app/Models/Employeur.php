@@ -18,6 +18,7 @@ class Employeur extends Model
         'localisation_id',
         'description',
         'logo',
+        'nom',
         'email',
         'contact_1',
         'contact_2',
@@ -31,7 +32,7 @@ class Employeur extends Model
         'user_update_id',
     ];
 
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);

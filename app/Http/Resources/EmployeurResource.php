@@ -18,6 +18,7 @@ class EmployeurResource extends JsonResource
             'user' => $this->user,
             'localisation' => $this->localisation,
             'abonnement' => $this->abonnement,
+            'nom' => $this->nom,
             /*'secteurs' => SecteurResource::collection($this->secteurs),
             'demandes' => DemandeResource::collection($this->demandes),*/
             'description' => $this->description,
