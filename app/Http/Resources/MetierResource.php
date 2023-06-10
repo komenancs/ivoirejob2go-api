@@ -15,6 +15,7 @@ class MetierResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'nom_metier' => $this->nom,
             'description' => $this->description,
             /*'demandes' => DemandeResource::collection($this->demandes),

@@ -15,6 +15,7 @@ class SecteurResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'nom_secteur' => $this->nom_secteur,
             /*'demandes' => DemandeResource::collection($this->demandes),
             'employeurs' => EmployeurResource::collection($this->employeurs),*/

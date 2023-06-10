@@ -15,6 +15,7 @@ class PjResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'message' => $this->message,
             'filename' => $this->filename,
             'extension' => $this->extension,

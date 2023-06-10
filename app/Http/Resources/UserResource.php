@@ -15,6 +15,7 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'surname' => $this->surname,
@@ -30,10 +31,10 @@ class UserResource extends JsonResource
             'localisation' => $this->localisation,
             'candidat' => $this->candidat,
             'employeur' => $this->employeur,
-            /*'notifications' => NotificationResource::collection($this->notifications),
+            'notifications' => NotificationResource::collection($this->notifications),
             'paiements' => PaiementResource::collection($this->paiements),
             'inbox' => MessageResource::collection($this->inbox),
-            'sent' => MessageResource::collection($this->sent),*/
+            'sent' => MessageResource::collection($this->sent),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 

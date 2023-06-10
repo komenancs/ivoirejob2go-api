@@ -15,8 +15,9 @@ class CertificatResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'type_certificat' => $this->type_certificat,
-            'candidat_id' => $this->candidat->id ?? null,
+            'candidat' => $this->candidat,
             'nom' => $this->nom,
             'numero_certificat' => $this->numero_certificat,
             'date_obtention' => $this->date_obtention,

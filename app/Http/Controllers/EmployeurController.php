@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmployeurRequest;
 use App\Models\Employeur;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Http\Resources\EmployeurCollection;
 use App\Http\Resources\EmployeurResource;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EmployeurController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      */

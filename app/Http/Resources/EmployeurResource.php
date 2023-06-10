@@ -15,12 +15,13 @@ class EmployeurResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'user' => $this->user,
             'localisation' => $this->localisation,
             'abonnement' => $this->abonnement,
             'nom' => $this->nom,
-            /*'secteurs' => SecteurResource::collection($this->secteurs),
-            'demandes' => DemandeResource::collection($this->demandes),*/
+            'secteurs' => SecteurResource::collection($this->secteurs),
+            'demandes' => DemandeResource::collection($this->demandes),
             'description' => $this->description,
             'logo' => $this->logo,
             'email' => $this->email,

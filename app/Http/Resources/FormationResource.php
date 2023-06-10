@@ -15,7 +15,8 @@ class FormationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'candidat_id' => $this->candidat->id ?? null,
+            'id' => $this->id,
+            'candidat' => $this->candidat,
             'titre' => $this->titre,
             'ecole' => $this->ecole,
             'date_debut' => $this->date_debut,

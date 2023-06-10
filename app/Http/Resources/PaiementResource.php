@@ -15,6 +15,7 @@ class PaiementResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'user' => $this->user,
             'date_paiement' => $this->date_paiement,
             'montant' => $this->montant,

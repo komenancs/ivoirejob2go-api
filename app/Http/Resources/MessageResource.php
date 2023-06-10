@@ -15,10 +15,11 @@ class MessageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return  [
+            'id' => $this->id,
             'sender' => $this->sender,
             'recipient' => $this->recipient,
             'content' => $this->content,
-            /*'pjs' => PjResource::collection($this->pjs),*/
+            'pjs' => PjResource::collection($this->pjs),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

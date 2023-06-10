@@ -15,9 +15,10 @@ class RoleResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'nom' => $this->nom,
             'description' => $this->description,
-            /*'users' => UserResource::collection($this->users),*/
+            'users' => UserResource::collection($this->users),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

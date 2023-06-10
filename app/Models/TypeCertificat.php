@@ -23,6 +23,6 @@ class TypeCertificat extends Model
 
     public function certificats()
     {
-        $this->hasMany(Certificat::class, 'type_certificat_id');
+        return $this->hasMany(Certificat::class, 'type_certificat_id');
     }
 }

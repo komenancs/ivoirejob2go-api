@@ -15,6 +15,7 @@ class DemandeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'titre' => $this->titre,
             'employeur' => $this->employeur,
             'description' => $this->description,
@@ -23,10 +24,10 @@ class DemandeResource extends JsonResource
             'type_contrat' => $this->type_contrat,
             'date_publication' => $this->date_publication,
             'date_expiration' => $this->date_expiration,
-            /*'metiers' => MetierResource::collection($this->metiers),
+            'metiers' => MetierResource::collection($this->metiers),
             'secteurs' => SecteurResource::collection($this->secteurs),
             'localisations' => LocalisationResource::collection($this->localisations),
-            'competences' => CompetenceResource::collection($this->competences),*/
+            'competences' => CompetenceResource::collection($this->competences),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
