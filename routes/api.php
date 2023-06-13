@@ -45,6 +45,9 @@ use App\Http\Controllers\CandidatureController;
 use App\Http\Controllers\TypeContratController;
 use App\Http\Controllers\LocalisationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Recherche\CandidatRechercheController;
+use App\Http\Controllers\Recherche\DemandeRechercheController;
+use App\Http\Controllers\Recherche\EmployeurRechercheController;
 use App\Http\Controllers\Relationship\AbonnementCandidatController;
 use App\Http\Controllers\Relationship\AbonnementEmployeurController;
 use App\Http\Controllers\TypeCertificatController;
@@ -178,28 +181,29 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
     Route::apiResource('users', UserController::class);
 
     Route::prefix("recherche")->group(function (){
+
         //Demande
-        Route::get("demandes/{search}");
-        Route::get("demandes/secteurs/{search}");
-        Route::get("demandes/metiers/{search}");
-        Route::get("demandes/competences/{search}");
-        Route::get("demandes/localisations/{search}");
-        Route::get("demandes/type-contrats/{search}");
+        Route::get("demandes/{search}", [DemandeRechercheController::class, 'rechercheParTitreEtParDescription']);
+        Route::get("demandes/secteurs/{search}", [DemandeRechercheController::class, 'rechercheParNomSecteur']);
+        Route::get("demandes/metiers/{search}", [DemandeRechercheController::class, 'rechercheParNomMetiers']);
+        Route::get("demandes/competences/{search}", [DemandeRechercheController::class, 'rechercheParNomCompetences']);
+        Route::get("demandes/localisations/{search}", [DemandeRechercheController::class, 'rechercheParLocalisations']);
+        Route::get("demandes/type-contrats/{search}", [DemandeRechercheController::class, 'rechercheParNomTypeContrats']);
 
         //Candidat
-        Route::get("candidats/{search}");
-        Route::get("candidats/secteurs/{search}");
-        Route::get("candidats/metiers/{search}");
-        Route::get("candidats/competences/{search}");
-        Route::get("candidats/localisations/{search}");
-        Route::get("candidats/certificats/{search}");
+        Route::get("candidats/{search}", [CandidatRechercheController::class, 'rechercheParPresentation']);
+        Route::get("candidats/secteurs/{search}", [CandidatRechercheController::class, 'rechercheParNomSecteur']);
+        Route::get("candidats/metiers/{search}", [CandidatRechercheController::class, 'rechercheParNomMetiers']);
+        Route::get("candidats/competences/{search}", [CandidatRechercheController::class, 'rechercheParNomCompetences']);
+        Route::get("candidats/localisations/{search}", [CandidatRechercheController::class, 'rechercheParLocalisations']);
+        Route::get("candidats/certificats/{search}", [CandidatRechercheController::class, 'rechercheParCertificat']);
 
         //Employeurs
-        Route::get("employeurs/{search}");
-        Route::get("employeurs/secteurs/{search}");
-        Route::get("employeurs/metiers/{search}");
-        Route::get("employeurs/competences/{search}");
-        Route::get("employeurs/localisations/{search}");
-    });
+        Route::get("employeurs/{search}", [EmployeurRechercheController::class, 'rechercheParNomEmail']);
+        Route::get("employeurs/secteurs/{search}", [EmployeurRechercheController::class, 'rechercheParNomSecteur']);
+        Route::get("employeurs/metiers/{search}", [EmployeurRechercheController::class, 'rechercheParNomMetiers']);
+        Route::get("employeurs/competences/{search}", [EmployeurRechercheController::class, 'rechercheParNomCompetences']);
+        Route::get("employeurs/localisations/{search}", [EmployeurRechercheController::class, 'rechercheParLocalisations']);
 
+    });
 });

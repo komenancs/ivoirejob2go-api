@@ -16,6 +16,8 @@ class Localisation extends Model
     protected $fillable = [
         'pays',
         'ville',
+        'quatier',
+        'rue',
         'user_create_id',
         'user_update_id',
         'quatier',
