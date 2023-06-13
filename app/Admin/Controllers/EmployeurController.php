@@ -30,7 +30,6 @@ class EmployeurController extends AdminController
         $grid->column('localisation_id', __('Localisation id'));
         $grid->column('description', __('Description'));
         $grid->column('logo', __('Logo'));
-        $grid->column('nom', __('Nom'));
         $grid->column('email', __('Email'));
         $grid->column('abonnement_id', __('Abonnement id'));
         $grid->column('nombre_demandes_restantes', __('Nombre demandes restantes'));
@@ -46,6 +45,7 @@ class EmployeurController extends AdminController
         $grid->column('deleted_at', __('Deleted at'));
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
+        $grid->column('nom', __('Nom'));
 
         return $grid;
     }
@@ -64,7 +64,6 @@ class EmployeurController extends AdminController
         $show->field('localisation_id', __('Localisation id'));
         $show->field('description', __('Description'));
         $show->field('logo', __('Logo'));
-        $show->field('nom', __('nom'));
         $show->field('email', __('Email'));
         $show->field('abonnement_id', __('Abonnement id'));
         $show->field('nombre_demandes_restantes', __('Nombre demandes restantes'));
@@ -80,6 +79,7 @@ class EmployeurController extends AdminController
         $show->field('deleted_at', __('Deleted at'));
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
+        $show->field('nom', __('Nom'));
 
         return $show;
     }
@@ -96,7 +96,6 @@ class EmployeurController extends AdminController
         $form->number('localisation_id', __('Localisation id'));
         $form->textarea('description', __('Description'));
         $form->text('logo', __('Logo'));
-        $form->text('nom', __('nom'));
         $form->email('email', __('Email'));
         $form->number('abonnement_id', __('Abonnement id'));
         $form->number('nombre_demandes_restantes', __('Nombre demandes restantes'));
@@ -109,6 +108,7 @@ class EmployeurController extends AdminController
         $form->number('user_id', __('User id'));
         $form->number('user_create_id', __('User create id'));
         $form->number('user_update_id', __('User update id'));
+        $form->text('nom', __('Nom'));
 
         return $form;
     }

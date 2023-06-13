@@ -28,6 +28,19 @@ class DemandeController extends Controller
     public function store(DemandeRequest $request)
     {
         $demande = Demande::create($request->validated());
+
+        if ($request->has('metier_ids')){
+            $demande->metiers()->attach($request->metier_ids);
+        }
+        if ($request->has('secteur_ids')){
+            $demande->secteurs()->attach($request->secteur_ids);
+        }
+        if ($request->has('localisation_ids')){
+            $demande->localisations()->attach($request->localisation_ids);
+        }
+        if ($request->has('competence_ids')){
+            $demande->competences()->attach($request->competence_ids);
+        }
         return (new DemandeResource($demande))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -51,6 +64,19 @@ class DemandeController extends Controller
             return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
         }
         $demande->update($request->validated());
+
+        if ($request->has('metier_ids')){
+            $demande->metiers()->attach($request->metier_ids);
+        }
+        if ($request->has('secteur_ids')){
+            $demande->secteurs()->attach($request->secteur_ids);
+        }
+        if ($request->has('localisation_ids')){
+            $demande->localisations()->attach($request->localisation_ids);
+        }
+        if ($request->has('competence_ids')){
+            $demande->competences()->attach($request->competence_ids);
+        }
         return ( new DemandeResource($demande))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 

@@ -61,6 +61,20 @@ class AbonnementController extends AdminController
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
 
+        $show->candidats('Candidats', function ($candidats) {
+
+            $candidats->resource('/admin/candidats');
+
+            $candidats->id();
+            $candidats->created_at();
+            $candidats->updated_at();
+
+            $candidats->filter(function ($filter) {
+                $filter->like('id');
+            });
+        });
+
+
         return $show;
     }
 

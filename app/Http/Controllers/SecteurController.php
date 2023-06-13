@@ -28,6 +28,12 @@ class SecteurController extends Controller
     public function store(SecteurRequest $request)
     {
         $secteur = Secteur::create($request->validated());
+        if ($request->has('demande_ids')){
+            $secteur->demandes()->attach($request->demande_ids);
+        }
+        if ($request->has('employeur_ids')){
+            $secteur->employeurs()->attach($request->employeur_ids);
+        }
         return (new SecteurResource($secteur))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -51,6 +57,12 @@ class SecteurController extends Controller
             return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
         }
         $secteur->update($request->validated());
+        if ($request->has('demande_ids')){
+            $secteur->demandes()->attach($request->demande_ids);
+        }
+        if ($request->has('employeur_ids')){
+            $secteur->employeurs()->attach($request->employeur_ids);
+        }
         return ( new SecteurResource($secteur))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 

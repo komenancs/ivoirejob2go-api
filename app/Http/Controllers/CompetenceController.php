@@ -28,6 +28,9 @@ class CompetenceController extends Controller
     public function store(CompetenceRequest $request)
     {
         $competence = Competence::create($request->validated());
+        if ($request->has('candidat_ids')){
+            $competence->candidats()->attach($request->candidat_ids);
+        }
         return (new CompetenceResource($competence))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -51,6 +54,9 @@ class CompetenceController extends Controller
             return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
         }
         $competence->update($request->validated());
+        if ($request->has('candidat_ids')){
+            $competence->candidats()->attach($request->candidat_ids);
+        }
         return ( new CompetenceResource($competence))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 

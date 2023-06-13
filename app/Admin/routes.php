@@ -29,4 +29,10 @@ Route::group([
     $router->resource('type-certificats', TypeCertificatController::class);
     $router->resource('type-contrats', TypeContratController::class);
 
+    $router->resource('certificats', CertificatController::class);
+    $router->resource('competences', CompetenceController::class);
+    $router->resource('demandes', DemandeController::class);
+    $router->resource('employeurs', EmployeurController::class);
+    $router->resource('experiences', ExperienceController::class);
+    $router->resource('formations', FormationController::class);
 });

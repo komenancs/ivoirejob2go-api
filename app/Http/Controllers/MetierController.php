@@ -28,6 +28,12 @@ class MetierController extends Controller
     public function store(MetierRequest $request)
     {
         $metier = Metier::create($request->validated());
+        if ($request->has('demande_ids')){
+            $metier->demandes()->attach($request->demande_ids);
+        }
+        if ($request->has('candidat_ids')){
+            $metier->candidats()->attach($request->candidat_ids);
+        }
         return (new MetierResource($metier))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -51,6 +57,12 @@ class MetierController extends Controller
             return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
         }
         $metier->update($request->validated());
+        if ($request->has('demande_ids')){
+            $metier->demandes()->attach($request->demande_ids);
+        }
+        if ($request->has('candidat_ids')){
+            $metier->candidats()->attach($request->candidat_ids);
+        }
         return ( new MetierResource($metier))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 

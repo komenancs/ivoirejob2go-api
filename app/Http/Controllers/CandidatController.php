@@ -28,6 +28,15 @@ class CandidatController extends Controller
     public function store(CandidatRequest $request)
     {
         $candidat = Candidat::create($request->validated());
+        if ($request->has('competence_ids')){
+            $candidat->competences()->attach($request->competence_ids);
+        }
+        if ($request->has('metier_ids')){
+            $candidat->metiers()->attach($request->metier_ids);
+        }
+        if ($request->has('demande_ids')){
+            $candidat->demandes()->attach($request->demande_ids);
+        }
         return (new CandidatResource($candidat))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -51,6 +60,15 @@ class CandidatController extends Controller
             return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
         }
         $candidat->update($request->validated());
+        if ($request->has('competence_ids')){
+            $candidat->competences()->attach($request->competence_ids);
+        }
+        if ($request->has('metier_ids')){
+            $candidat->metiers()->attach($request->metier_ids);
+        }
+        if ($request->has('demande_ids')){
+            $candidat->demandes()->attach($request->demande_ids);
+        }
         return ( new CandidatResource($candidat))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 
@@ -67,6 +85,6 @@ class CandidatController extends Controller
             return $this->getSuccessResponse(null, Response::HTTP_OK, "Suppression effectuée.");
         } else {
             return $this->getErrorResponse(Response::HTTP_NOT_MODIFIED, "Aucun élément supprimé.");
-        }   
+        }
     }
 }

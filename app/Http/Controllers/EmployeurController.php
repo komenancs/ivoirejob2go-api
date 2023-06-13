@@ -34,6 +34,9 @@ class EmployeurController extends Controller
             );
         }
         $employeur = Employeur::create(array_merge($request->safe()->except(['logo',]), ["logo" => $logo ?? null]));
+        if ($request->has("secteur_ids")){
+            $employeur->secteurs()->attach($request->secteur_ids);
+        }
         return (new EmployeurResource($employeur))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -62,6 +65,9 @@ class EmployeurController extends Controller
             );
         }
         $employeur->update(array_merge($request->safe()->except(['logo',]), ["logo" => $logo ?? null]));
+        if ($request->has("secteur_ids")){
+            $employeur->secteurs()->attach($request->secteur_ids);
+        }
         return ( new EmployeurResource($employeur))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 

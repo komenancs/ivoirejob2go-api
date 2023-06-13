@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TypeCertificatRequest;
 use App\Traits\ApiResponser;
+use App\Utils\Utils;
 use Illuminate\Http\Request;
 use App\Models\TypeCertificat;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +23,21 @@ class TypeCertificatController extends Controller
         return ( new TypeCertificatCollection($typeCertificats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
-    
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(TypeCertificatRequest $request)
     {
-        $typeCertificat = TypeCertificat::create($request->validated());
+        if ($request->hasFile('organisme_logo')){
+            $organisme_logo = $request->file('organisme_logo')->storeAs(
+                'organisme_logo', Utils::slugify(
+                     $request->file('organisme_logo')->getClientOriginalName()
+                ) . "." . $request->file('organisme_logo')->getClientOriginalExtension()
+            );
+        }
+        $typeCertificat = TypeCertificat::create(array_merge($request->safe()->except(['organisme_logo']), ['organisme_logo' => $organisme_logo ?? null]));
         return (new TypeCertificatResource($typeCertificat))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -52,7 +60,14 @@ class TypeCertificatController extends Controller
         if (!$typeCertificat) {
             return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
         }
-        $typeCertificat->update($request->validated());
+        if ($request->hasFile('organisme_logo')){
+            $organisme_logo = $request->file('organisme_logo')->storeAs(
+                'organisme_logo', Utils::slugify(
+                    $request->file('organisme_logo')->getClientOriginalName()
+                ) . "." . $request->file('organisme_logo')->getClientOriginalExtension()
+            );
+        }
+        $typeCertificat->update(array_merge($request->safe()->except(['organisme_logo']), ['organisme_logo' => $organisme_logo ?? null]));
         return ( new TypeCertificatResource($typeCertificat))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 

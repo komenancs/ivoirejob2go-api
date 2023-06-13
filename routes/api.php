@@ -72,108 +72,134 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
 
 Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function () {
 //Route for model relationship
 //Abonnement
-Route::get('abonnements/{id}/candidats', [AbonnementCandidatController::class, 'index']);
-Route::get('abonnements/{id}/employeurs', [AbonnementEmployeurController::class, 'index']);
+    Route::get('abonnements/{id}/candidats', [AbonnementCandidatController::class, 'index']);
+    Route::get('abonnements/{id}/employeurs', [AbonnementEmployeurController::class, 'index']);
 
 //Candidat
-Route::get('candidats/{id}/candidatures', [CandidatCandidatureController::class, 'index']);
-Route::post('candidats/{id}/candidatures/', [CandidatCandidatureController::class, 'store']);
-Route::delete('candidats/{id}/candidatures/{cdt_id}', [CandidatCandidatureController::class, 'destroy']);
+    Route::get('candidats/{id}/candidatures', [CandidatCandidatureController::class, 'index']);
+    Route::post('candidats/{id}/candidatures/', [CandidatCandidatureController::class, 'store']);
+    Route::delete('candidats/{id}/candidatures/{cdt_id}', [CandidatCandidatureController::class, 'destroy']);
 
-Route::get('candidats/{id}/certificats', [CandidatCertificatController::class, 'index']);
-Route::post('candidats/{id}/certificats', [CandidatCertificatController::class, 'store']);
-Route::delete('candidats/{id}/certificats/{crt_id}', [CandidatCertificatController::class, 'destroy']);
+    Route::get('candidats/{id}/certificats', [CandidatCertificatController::class, 'index']);
+    Route::post('candidats/{id}/certificats', [CandidatCertificatController::class, 'store']);
+    Route::delete('candidats/{id}/certificats/{crt_id}', [CandidatCertificatController::class, 'destroy']);
 
-Route::get('candidats/{id}/competences', [CandidatCompetenceController::class, 'index']);
-Route::post('candidats/{id}/competences', [CandidatCompetenceController::class, 'store']);
-Route::delete('candidats/{id}/competences/{cmp_id}', [CandidatCompetenceController::class, 'destroy']);
+    Route::get('candidats/{id}/competences', [CandidatCompetenceController::class, 'index']);
+    Route::post('candidats/{id}/competences', [CandidatCompetenceController::class, 'store']);
+    Route::delete('candidats/{id}/competences/{cmp_id}', [CandidatCompetenceController::class, 'destroy']);
 
-Route::get('candidats/{id}/demandes', [CandidatDemandeController::class, 'index']);
+    Route::get('candidats/{id}/demandes', [CandidatDemandeController::class, 'index']);
 
-Route::get('candidats/{id}/formations', [CandidatFormationController::class, 'index']);
+    Route::get('candidats/{id}/formations', [CandidatFormationController::class, 'index']);
 
-Route::get('candidats/{id}/metiers', [CandidatMetierController::class, 'index']);
-Route::post('candidats/{id}/metiers', [CandidatMetierController::class, 'store']);
-Route::delete('candidats/{id}/metiers/{mt_id}', [CandidatMetierController::class, 'destroy']);
+    Route::get('candidats/{id}/metiers', [CandidatMetierController::class, 'index']);
+    Route::post('candidats/{id}/metiers', [CandidatMetierController::class, 'store']);
+    Route::delete('candidats/{id}/metiers/{mt_id}', [CandidatMetierController::class, 'destroy']);
 
 //Competence
-Route::get('competences/{id}/candidats', [CompetenceCandidatController::class, 'index']);
+    Route::get('competences/{id}/candidats', [CompetenceCandidatController::class, 'index']);
 
 //Demande
-Route::get("demandes/{id}/metiers", [DemandeMetierController::class, 'index']);
-Route::post("demandes/{id}/metiers", [DemandeMetierController::class, 'store']);
-Route::delete("demandes/{id}/metiers/{mt_id}", [DemandeMetierController::class, 'destroy']);
+    Route::get("demandes/{id}/metiers", [DemandeMetierController::class, 'index']);
+    Route::post("demandes/{id}/metiers", [DemandeMetierController::class, 'store']);
+    Route::delete("demandes/{id}/metiers/{mt_id}", [DemandeMetierController::class, 'destroy']);
 
-Route::get("demandes/{id}/secteurs", [DemandeSecteurController::class, 'index']);
-Route::post("demandes/{id}/secteurs", [DemandeSecteurController::class, 'store']);
-Route::delete("demandes/{id}/secteurs/{sct_id}", [DemandeSecteurController::class, 'destroy']);
+    Route::get("demandes/{id}/secteurs", [DemandeSecteurController::class, 'index']);
+    Route::post("demandes/{id}/secteurs", [DemandeSecteurController::class, 'store']);
+    Route::delete("demandes/{id}/secteurs/{sct_id}", [DemandeSecteurController::class, 'destroy']);
 
-Route::get("demandes/{id}/localisations", [DemandeLocalisationController::class, 'index']);
-Route::post("demandes/{id}/localisations", [DemandeLocalisationController::class, 'store']);
-Route::delete("demandes/{id}/localisations/{lcl_id}", [DemandeLocalisationController::class, 'destroy']);
+    Route::get("demandes/{id}/localisations", [DemandeLocalisationController::class, 'index']);
+    Route::post("demandes/{id}/localisations", [DemandeLocalisationController::class, 'store']);
+    Route::delete("demandes/{id}/localisations/{lcl_id}", [DemandeLocalisationController::class, 'destroy']);
 
-Route::get("demandes/{id}/competences", [DemandeCompetenceController::class, 'index']);
-Route::post("demandes/{id}/competences", [DemandeCompetenceController::class, 'store']);
-Route::delete("demandes/{id}/competences/{cpt_id}", [DemandeCompetenceController::class, 'destroy']);
+    Route::get("demandes/{id}/competences", [DemandeCompetenceController::class, 'index']);
+    Route::post("demandes/{id}/competences", [DemandeCompetenceController::class, 'store']);
+    Route::delete("demandes/{id}/competences/{cpt_id}", [DemandeCompetenceController::class, 'destroy']);
 
 //Employeur
-Route::get("employeurs/{id}/secteurs", [EmployeurSecteurController::class, 'index']);
-Route::post("employeurs/{id}/secteurs", [EmployeurSecteurController::class, 'store']);
-Route::delete("employeurs/{id}/secteurs/{sct_id}", [EmployeurSecteurController::class, 'destroy']);
+    Route::get("employeurs/{id}/secteurs", [EmployeurSecteurController::class, 'index']);
+    Route::post("employeurs/{id}/secteurs", [EmployeurSecteurController::class, 'store']);
+    Route::delete("employeurs/{id}/secteurs/{sct_id}", [EmployeurSecteurController::class, 'destroy']);
 
 
 //Localisation
-Route::get("localisations/{id}/demandes", [LocalisationDemandeController::class, 'index']);
-Route::post("localisations/{id}/demandes", [LocalisationDemandeController::class, 'store']);
-Route::delete("localisations/{id}/demandes/dmd_id}", [LocalisationDemandeController::class, 'destroy']);
+    Route::get("localisations/{id}/demandes", [LocalisationDemandeController::class, 'index']);
+    Route::post("localisations/{id}/demandes", [LocalisationDemandeController::class, 'store']);
+    Route::delete("localisations/{id}/demandes/dmd_id}", [LocalisationDemandeController::class, 'destroy']);
 
-Route::get("localisations/{id}/employeurs", [LocalisationEmployeurController::class, 'index']);
+    Route::get("localisations/{id}/employeurs", [LocalisationEmployeurController::class, 'index']);
 
-Route::get("localisations/{id}/users", [LocalisationUserController::class, 'index']);
+    Route::get("localisations/{id}/users", [LocalisationUserController::class, 'index']);
 //Pj
-Route::get("messages/{id}/pjs", [MessagePjController::class, 'index']);
+    Route::get("messages/{id}/pjs", [MessagePjController::class, 'index']);
 
 //TypeCertificats
-Route::get('type-certificats/{id}/certificats', [TypeCertificatCertificatController::class, 'index']);
+    Route::get('type-certificats/{id}/certificats', [TypeCertificatCertificatController::class, 'index']);
 
 //TypeContrat
-Route::get('type-contrats/{id}/demandes', [TypeContratDemandeController::class, 'index']);
+    Route::get('type-contrats/{id}/demandes', [TypeContratDemandeController::class, 'index']);
 
 //User
-Route::get('users/{id}/notifications', [UserNotificationController::class, 'index']);
+    Route::get('users/{id}/notifications', [UserNotificationController::class, 'index']);
 
-Route::get('users/{id}/paiements', [UserPaiementController::class, 'index']);
+    Route::get('users/{id}/paiements', [UserPaiementController::class, 'index']);
 
-Route::get('users/{id}/inbox', [UserInboxController::class, 'index']);
+    Route::get('users/{id}/inbox', [UserInboxController::class, 'index']);
 
-Route::get('users/{id}/sent', [UserSentController::class, 'index']);
+    Route::get('users/{id}/sent', [UserSentController::class, 'index']);
 
 // ApiRessource for model
-Route::apiResource('abonnements', AbonnementController::class);
-Route::apiResource('candidats', CandidatController::class);
-Route::apiResource('candidatures', CandidatureController::class);
-Route::apiResource('certificats', CertificatController::class);
-Route::apiResource('competences', CompetenceController::class);
-Route::apiResource('demandes', DemandeController::class);
-Route::apiResource('employeurs', EmployeurController::class);
-Route::apiResource('experiences', ExperienceController::class);
-Route::apiResource('formations', FormationController::class);
-Route::apiResource('localisations', LocalisationController::class);
-Route::apiResource('messages', MessageController::class);
-Route::apiResource('metiers', MetierController::class);
-Route::apiResource('notifications', NotificationController::class);
-Route::apiResource('paiements', PaiementController::class);
-Route::apiResource('pjs', PjController::class);
-Route::apiResource('reglages', ReglageController::class);
-Route::apiResource('roles', RoleController::class);
-Route::apiResource('secteurs', SecteurController::class);
-Route::apiResource('type-certificats', TypeCertificatController::class);
-Route::apiResource('type-contrats', TypeContratController::class);
-Route::apiResource('users', UserController::class);
+    Route::apiResource('abonnements', AbonnementController::class);
+    Route::apiResource('candidats', CandidatController::class);
+    Route::apiResource('candidatures', CandidatureController::class);
+    Route::apiResource('certificats', CertificatController::class);
+    Route::apiResource('competences', CompetenceController::class);
+    Route::apiResource('demandes', DemandeController::class);
+    Route::apiResource('employeurs', EmployeurController::class);
+    Route::apiResource('experiences', ExperienceController::class);
+    Route::apiResource('formations', FormationController::class);
+    Route::apiResource('localisations', LocalisationController::class);
+    Route::apiResource('messages', MessageController::class);
+    Route::apiResource('metiers', MetierController::class);
+    Route::apiResource('notifications', NotificationController::class);
+    Route::apiResource('paiements', PaiementController::class);
+    Route::apiResource('pjs', PjController::class);
+    Route::apiResource('reglages', ReglageController::class);
+    Route::apiResource('roles', RoleController::class);
+    Route::apiResource('secteurs', SecteurController::class);
+    Route::apiResource('type-certificats', TypeCertificatController::class);
+    Route::apiResource('type-contrats', TypeContratController::class);
+    Route::apiResource('users', UserController::class);
+
+    Route::prefix("recherche")->group(function (){
+        //Demande
+        Route::get("demandes/{search}");
+        Route::get("demandes/secteurs/{search}");
+        Route::get("demandes/metiers/{search}");
+        Route::get("demandes/competences/{search}");
+        Route::get("demandes/localisations/{search}");
+        Route::get("demandes/type-contrats/{search}");
+
+        //Candidat
+        Route::get("candidats/{search}");
+        Route::get("candidats/secteurs/{search}");
+        Route::get("candidats/metiers/{search}");
+        Route::get("candidats/competences/{search}");
+        Route::get("candidats/localisations/{search}");
+        Route::get("candidats/certificats/{search}");
+
+        //Employeurs
+        Route::get("employeurs/{search}");
+        Route::get("employeurs/secteurs/{search}");
+        Route::get("employeurs/metiers/{search}");
+        Route::get("employeurs/competences/{search}");
+        Route::get("employeurs/localisations/{search}");
+    });
+
 });

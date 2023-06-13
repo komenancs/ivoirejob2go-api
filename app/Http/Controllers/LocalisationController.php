@@ -28,6 +28,9 @@ class LocalisationController extends Controller
     public function store(LocalisationRequest $request)
     {
         $localisation = Localisation::create($request->validated());
+        if ($request->has('demande_ids')){
+            $localisation->demandes()->attach($request->demande_ids);
+        }
         return (new LocalisationResource($localisation))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -52,6 +55,9 @@ class LocalisationController extends Controller
             return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
         }
         $localisation->update($request->validated());
+        if ($request->has('demande_ids')){
+            $localisation->demandes()->attach($request->demande_ids);
+        }
         return ( new LocalisationResource($localisation))->additional($this->getResponseTemplate(Response::HTTP_OK, "Modifié"));
     }
 
