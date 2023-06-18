@@ -15,28 +15,28 @@ class EmployeurRechercheController extends Controller
         $employeurs = Employeur::whereHas('localisations', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%')
             ->orWhere('email', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new EmployeurCollection($employeurs))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParNomSecteur(string $search) : EmployeurCollection {
         $employeurs = Employeur::whereHas('secteurs', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new EmployeurCollection($employeurs))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParNomMetiers(string $search) : EmployeurCollection {
         $employeurs = Employeur::whereHas('metiers', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new EmployeurCollection($employeurs))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParNomCompetences(string $search) : EmployeurCollection {
         $employeurs = Employeur::whereHas('competences', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new EmployeurCollection($employeurs))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -46,7 +46,7 @@ class EmployeurRechercheController extends Controller
             ->orWhere('ville', 'like', '%' . $search . '%')
             ->orWhere('quatier', 'like', '%' . $search . '%')
             ->orWhere('rue', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new EmployeurCollection($employeurs))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -69,6 +69,6 @@ class EmployeurRechercheController extends Controller
             });
         }
 
-        return ( new EmployeurCollection($employeurs->paginate()))->additional($this->getResponseTemplate(Response::HTTP_OK));
+        return ( new EmployeurCollection($employeurs->customPaginate()))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 }

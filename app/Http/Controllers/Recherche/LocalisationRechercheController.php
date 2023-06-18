@@ -17,10 +17,10 @@ class LocalisationRechercheController extends Controller
        $model_fillable = app(Localisation::class)->getFillable();
        if (in_array($group_by, $model_fillable)) {
             $localisations = Localisation::groupBy($group_by)
-            ->paginate(); # SQL Strict mode set to false to permit it in config/database.php
+            ->customPaginate(); # SQL Strict mode set to false to permit it in config/database.php
             //$localisations = Localisation::orderBy($group_by)
-            //->paginate();
-            //$localisations = DB::table('localisations')->groupBy($group_by)->paginate(); => Syntax error or access violation: 1055 Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column
+            //->customPaginate();
+            //$localisations = DB::table('localisations')->groupBy($group_by)->customPaginate(); => Syntax error or access violation: 1055 Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column
             return ( new LocalisationCollection($localisations))->additional($this->getResponseTemplate(Response::HTTP_OK));
        }
        return $this->getErrorResponse(Response::HTTP_BAD_REQUEST);
@@ -28,7 +28,7 @@ class LocalisationRechercheController extends Controller
 
     function searchByCountry(string $pays) {
         $localisations = Localisation::where('pays','LIKE',"%{$pays}%")
-        ->paginate();
+        ->customPaginate();
 
         return ( new LocalisationCollection($localisations))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }

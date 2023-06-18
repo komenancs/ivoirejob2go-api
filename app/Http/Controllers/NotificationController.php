@@ -18,7 +18,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications = Notification::paginate();
+        $notifications = Notification::customPaginate();
         return ( new NotificationCollection($notifications))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

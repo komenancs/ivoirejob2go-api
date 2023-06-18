@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate();
+        $users = User::customPaginate();
         return ( new UserCollection($users))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

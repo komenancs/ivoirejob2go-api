@@ -18,7 +18,7 @@ class PaiementController extends Controller
      */
     public function index()
     {
-        $paiements = Paiement::paginate();
+        $paiements = Paiement::customPaginate();
         return ( new PaiementCollection($paiements))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

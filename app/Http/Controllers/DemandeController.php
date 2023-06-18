@@ -18,7 +18,7 @@ class DemandeController extends Controller
      */
     public function index()
     {
-        $demandes = Demande::paginate();
+        $demandes = Demande::customPaginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

@@ -19,7 +19,7 @@ class TypeCertificatController extends Controller
      */
     public function index()
     {
-        $typeCertificats = TypeCertificat::paginate();
+        $typeCertificats = TypeCertificat::customPaginate();
         return ( new TypeCertificatCollection($typeCertificats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

@@ -13,7 +13,7 @@ class CandidatRechercheController extends Controller
 {
     function rechercheParPresentation(string $search) : CandidatCollection {
         $candidats = Candidat::where('presentation','LIKE',"%{$search}%")
-                        ->paginate();
+                        ->customPaginate();
 
         return ( new CandidatCollection($candidats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
@@ -21,21 +21,21 @@ class CandidatRechercheController extends Controller
     function rechercheParNomSecteur(string $search) : CandidatCollection {
         $candidats = Candidat::whereHas('secteurs', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new CandidatCollection($candidats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParNomMetiers(string $search) : CandidatCollection {
         $candidats = Candidat::whereHas('metiers', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new CandidatCollection($candidats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
     
     function rechercheParNomCompetences(string $search) : CandidatCollection {
         $candidats = Candidat::whereHas('competences', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new CandidatCollection($candidats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -45,14 +45,14 @@ class CandidatRechercheController extends Controller
             ->orWhere('ville', 'like', '%' . $search . '%')
             ->orWhere('quatier', 'like', '%' . $search . '%')
             ->orWhere('rue', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new CandidatCollection($candidats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParCertificat(string $search) : CandidatCollection {
         $candidats = Candidat::whereHas('certificats', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new CandidatCollection($candidats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -76,6 +76,6 @@ class CandidatRechercheController extends Controller
             });
         }
 
-        return ( new CandidatCollection($candidats->paginate()))->additional($this->getResponseTemplate(Response::HTTP_OK));
+        return ( new CandidatCollection($candidats->customPaginate()))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 }

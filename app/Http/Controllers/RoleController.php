@@ -18,7 +18,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate();
+        $roles = Role::customPaginate();
         return ( new RoleCollection($roles))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

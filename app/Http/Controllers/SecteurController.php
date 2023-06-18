@@ -18,7 +18,7 @@ class SecteurController extends Controller
      */
     public function index()
     {
-        $secteurs = Secteur::paginate();
+        $secteurs = Secteur::customPaginate();
         return ( new SecteurCollection($secteurs))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

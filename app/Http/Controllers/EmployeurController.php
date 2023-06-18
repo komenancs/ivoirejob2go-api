@@ -19,7 +19,7 @@ class EmployeurController extends Controller
      */
     public function index()
     {
-        $employeurs = Employeur::paginate();
+        $employeurs = Employeur::customPaginate();
         return ( new EmployeurCollection($employeurs))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

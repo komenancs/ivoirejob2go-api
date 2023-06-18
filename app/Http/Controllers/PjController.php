@@ -19,7 +19,7 @@ class PjController extends Controller
      */
     public function index()
     {
-        $pjs = Pj::paginate();
+        $pjs = Pj::customPaginate();
         return ( new PjCollection($pjs))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

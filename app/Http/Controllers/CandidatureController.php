@@ -18,7 +18,7 @@ class CandidatureController extends Controller
      */
     public function index()
     {
-        $candidatures = Candidature::paginate();
+        $candidatures = Candidature::customPaginate();
         return ( new CandidatureCollection($candidatures))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

@@ -18,7 +18,7 @@ class ReglageController extends Controller
      */
     public function index()
     {
-        $reglages = Reglage::paginate();
+        $reglages = Reglage::customPaginate();
         return ( new ReglageCollection($reglages))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

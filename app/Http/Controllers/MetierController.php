@@ -18,7 +18,7 @@ class MetierController extends Controller
      */
     public function index()
     {
-        $metiers = Metier::paginate();
+        $metiers = Metier::customPaginate();
         return ( new MetierCollection($metiers))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

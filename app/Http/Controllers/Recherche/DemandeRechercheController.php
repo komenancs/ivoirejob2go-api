@@ -16,7 +16,7 @@ class DemandeRechercheController extends Controller
     function rechercheParTitreEtParDescription(string $search) : DemandeCollection {
         $demandes = Demande::where('titre','LIKE',"%{$search}%")
                         ->orWhere('description','LIKE',"%{$search}%")
-                        ->paginate();
+                        ->customPaginate();
 
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
@@ -24,21 +24,21 @@ class DemandeRechercheController extends Controller
     function rechercheParNomSecteur(string $search) : DemandeCollection {
         $demandes = Demande::whereHas('secteurs', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParNomMetiers(string $search) : DemandeCollection {
         $demandes = Demande::whereHas('metiers', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParNomCompetences(string $search) : DemandeCollection {
         $demandes = Demande::whereHas('competences', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -48,14 +48,14 @@ class DemandeRechercheController extends Controller
             ->orWhere('ville', 'like', '%' . $search . '%')
             ->orWhere('quatier', 'like', '%' . $search . '%')
             ->orWhere('rue', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParNomTypeContrats(string $search) : DemandeCollection {
         $demandes = Demande::whereHas('type_contrat', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%');
-        })->paginate();
+        })->customPaginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -78,6 +78,6 @@ class DemandeRechercheController extends Controller
             });
         }
 
-        return ( new DemandeCollection($demandes->paginate()))->additional($this->getResponseTemplate(Response::HTTP_OK));
+        return ( new DemandeCollection($demandes->customPaginate()))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 }

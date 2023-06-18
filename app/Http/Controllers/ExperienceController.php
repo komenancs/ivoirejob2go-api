@@ -18,7 +18,7 @@ class ExperienceController extends Controller
      */
     public function index()
     {
-        $experiences = Experience::paginate();
+        $experiences = Experience::customPaginate();
         return ( new ExperienceCollection($experiences))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

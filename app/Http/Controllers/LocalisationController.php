@@ -18,7 +18,7 @@ class LocalisationController extends Controller
      */
     public function index()
     {
-        $localisations = Localisation::paginate();
+        $localisations = Localisation::customPaginate();
         return ( new LocalisationCollection($localisations))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

@@ -18,7 +18,7 @@ class TypeContratController extends Controller
      */
     public function index()
     {
-        $typeContrats = TypeContrat::paginate();
+        $typeContrats = TypeContrat::customPaginate();
         return ( new TypeContratCollection($typeContrats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

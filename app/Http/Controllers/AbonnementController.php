@@ -18,7 +18,7 @@ class AbonnementController extends Controller
      */
     public function index()
     {
-        $abonnememts = Abonnement::paginate();
+        $abonnememts = Abonnement::customPaginate();
         return ( new AbonnementCollection($abonnememts))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

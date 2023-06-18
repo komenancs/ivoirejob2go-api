@@ -18,7 +18,7 @@ class CompetenceController extends Controller
      */
     public function index()
     {
-        $competences = Competence::paginate();
+        $competences = Competence::customPaginate();
         return ( new CompetenceCollection($competences))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

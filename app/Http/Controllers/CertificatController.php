@@ -18,7 +18,7 @@ class CertificatController extends Controller
      */
     public function index()
     {
-        $certificats = Certificat::paginate();
+        $certificats = Certificat::customPaginate();
         return ( new CertificatCollection($certificats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

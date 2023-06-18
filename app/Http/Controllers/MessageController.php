@@ -18,7 +18,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::paginate();
+        $messages = Message::customPaginate();
         return ( new MessageCollection($messages))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 

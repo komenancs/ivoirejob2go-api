@@ -18,7 +18,7 @@ class FormationController extends Controller
      */
     public function index()
     {
-        $formations = Formation::paginate();
+        $formations = Formation::customPaginate();
         return ( new FormationCollection($formations))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
