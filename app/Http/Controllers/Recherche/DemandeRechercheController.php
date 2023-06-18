@@ -58,4 +58,8 @@ class DemandeRechercheController extends Controller
         })->get();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
+
+    function globalSearch(string $search, string $location) {
+        
+    }
 }

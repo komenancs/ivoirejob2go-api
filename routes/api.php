@@ -50,6 +50,7 @@ use App\Http\Controllers\Recherche\DemandeRechercheController;
 use App\Http\Controllers\Recherche\EmployeurRechercheController;
 use App\Http\Controllers\Relationship\AbonnementCandidatController;
 use App\Http\Controllers\Relationship\AbonnementEmployeurController;
+use App\Http\Controllers\Relationship\UserCandidatEmployeurController;
 use App\Http\Controllers\TypeCertificatController;
 
 /*
@@ -157,6 +158,10 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
 
     Route::get('users/{id}/sent', [UserSentController::class, 'index']);
 
+    Route::get('users/{id}/candidats', [UserCandidatEmployeurController::class, 'candidat']);
+
+    Route::get('users/{id}/employeurs', [UserCandidatEmployeurController::class, 'employeur']);
+
 // ApiRessource for model
     Route::apiResource('abonnements', AbonnementController::class);
     Route::apiResource('candidats', CandidatController::class);
@@ -189,6 +194,9 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
         Route::get("demandes/competences/{search}", [DemandeRechercheController::class, 'rechercheParNomCompetences']);
         Route::get("demandes/localisations/{search}", [DemandeRechercheController::class, 'rechercheParLocalisations']);
         Route::get("demandes/type-contrats/{search}", [DemandeRechercheController::class, 'rechercheParNomTypeContrats']);
+        Route::get("demandes/global/{search}/localisation/{location?}",
+         [DemandeRechercheController::class, 'globalSearch']
+        );
 
         //Candidat
         Route::get("candidats/{search}", [CandidatRechercheController::class, 'rechercheParPresentation']);

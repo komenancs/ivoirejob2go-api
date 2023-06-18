@@ -26,7 +26,6 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function login(Request $request){
         $validator = Validator::make($request->all(), [
@@ -70,10 +69,12 @@ class AuthController extends Controller
         if ($request->hasFile('photo')){
             $photo = $request->file('photo')->storeAs('user_photos', Utils::slugify($request->photo->getClientOriginalName()) . "." . $request->photo->getClientOriginalExtension());
         }
-        $user = User::create(array_merge(
-                    $validator->safe()->except(['photo']),
-                    ['password' => bcrypt($request->password), 'photo' => $photo ?? null]
-                ));
+        $validated = array_merge(
+            $validator->safe()->except(['photo']),
+            ['password' => bcrypt($request->password), 'photo' => $photo ?? null]
+        );
+        //dd($validated);
+        $user = User::create($validated);
         return (new UserResource($user))->additional($this->getResponseTemplate(Response::HTTP_OK, "User successfully registered"));
     }
 
@@ -88,17 +89,13 @@ class AuthController extends Controller
     }
     /**
      * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function refresh() {
-        return $this->createNewToken(auth()->refresh());
+        return $this->createNewToken(auth('api')->refresh());
     }
 
     /**
      * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function userProfile() {
         return (new UserResource(auth()->user()))->additional($this->getResponseTemplate(Response::HTTP_OK));
@@ -108,16 +105,16 @@ class AuthController extends Controller
      * Get the token array structure.
      *
      * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     protected function createNewToken($token){
-        return response()->json([
-            'status' => Response::HTTP_OK,
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'user' => auth()->user()
-        ]);
+        return ( new UserResource(auth()->user()))->additional(
+            array_merge(
+                $this->getResponseTemplate(Response::HTTP_OK),
+                array(
+                    'access_token' => $token,
+                    'token_type' => 'bearer',
+                    'expires_in' => auth('api')->factory()->getTTL() * 60,)
+                )
+        ); 
     }
 }
