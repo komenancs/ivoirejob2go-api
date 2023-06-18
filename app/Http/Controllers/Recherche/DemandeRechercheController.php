@@ -24,21 +24,21 @@ class DemandeRechercheController extends Controller
     function rechercheParNomSecteur(string $search) : DemandeCollection {
         $demandes = Demande::whereHas('secteurs', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%');
-        })->get();
+        })->paginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParNomMetiers(string $search) : DemandeCollection {
         $demandes = Demande::whereHas('metiers', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
-        })->get();
+        })->paginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParNomCompetences(string $search) : DemandeCollection {
         $demandes = Demande::whereHas('competences', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
-        })->get();
+        })->paginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
@@ -48,18 +48,36 @@ class DemandeRechercheController extends Controller
             ->orWhere('ville', 'like', '%' . $search . '%')
             ->orWhere('quatier', 'like', '%' . $search . '%')
             ->orWhere('rue', 'like', '%' . $search . '%');
-        })->get();
+        })->paginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
     function rechercheParNomTypeContrats(string $search) : DemandeCollection {
         $demandes = Demande::whereHas('type_contrat', function (Builder $query) use ($search) {
             $query->where('nom', 'like', '%' . $search . '%');
-        })->get();
+        })->paginate();
         return ( new DemandeCollection($demandes))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 
-    function globalSearch(string $search, string $location) {
-        
+    function globalSearch(string $search, string $location = null) {
+        $demandes = Demande::where('titre','LIKE',"%{$search}%")
+        ->orWhere('description','LIKE',"%{$search}%")->orWhereHas('secteurs', function (Builder $query) use ($search) {
+            $query->where('nom', 'like', '%' . $search . '%');
+        })->orWhereHas('metiers', function (Builder $query) use ($search) {
+            $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
+        })->orWhereHas('competences', function (Builder $query) use ($search) {
+            $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
+        });
+
+        if ($location) {
+            $demandes = $demandes->orWhereHas('localisations', function (Builder $query) use ($search) {
+                $query->where('pays', 'like', '%' . $search . '%')
+                ->orWhere('ville', 'like', '%' . $search . '%')
+                ->orWhere('quatier', 'like', '%' . $search . '%')
+                ->orWhere('rue', 'like', '%' . $search . '%');
+            });
+        }
+
+        return ( new DemandeCollection($demandes->paginate()))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
 }

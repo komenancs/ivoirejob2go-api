@@ -205,6 +205,9 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
         Route::get("candidats/competences/{search}", [CandidatRechercheController::class, 'rechercheParNomCompetences']);
         Route::get("candidats/localisations/{search}", [CandidatRechercheController::class, 'rechercheParLocalisations']);
         Route::get("candidats/certificats/{search}", [CandidatRechercheController::class, 'rechercheParCertificat']);
+        Route::get("candidats/global/{search}/localisation/{location?}",
+         [CandidatRechercheController::class, 'globalSearch']
+        );
 
         //Employeurs
         Route::get("employeurs/{search}", [EmployeurRechercheController::class, 'rechercheParNomEmail']);
@@ -212,6 +215,9 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
         Route::get("employeurs/metiers/{search}", [EmployeurRechercheController::class, 'rechercheParNomMetiers']);
         Route::get("employeurs/competences/{search}", [EmployeurRechercheController::class, 'rechercheParNomCompetences']);
         Route::get("employeurs/localisations/{search}", [EmployeurRechercheController::class, 'rechercheParLocalisations']);
+        Route::get("employeurs/global/{search}/localisation/{location?}",
+        [EmployeurRechercheController::class, 'globalSearch']
+       );
 
     });
 });

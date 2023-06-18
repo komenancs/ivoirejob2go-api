@@ -55,4 +55,27 @@ class CandidatRechercheController extends Controller
         })->paginate();
         return ( new CandidatCollection($candidats))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
+
+    function globalSearch(string $search, string $location = null) {
+        $candidats = Candidat::where('presentation','LIKE',"%{$search}%")->orWhereHas('secteurs', function (Builder $query) use ($search) {
+            $query->where('nom', 'like', '%' . $search . '%');
+        })->orWhereHas('metiers', function (Builder $query) use ($search) {
+            $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
+        })->orWhereHas('competences', function (Builder $query) use ($search) {
+            $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
+        })->orWhereHas('certificats', function (Builder $query) use ($search) {
+            $query->where('nom', 'like', '%' . $search . '%');
+        });
+
+        if ($location) {
+            $candidats = $candidats->orWhereHas('localisations', function (Builder $query) use ($search) {
+                $query->where('pays', 'like', '%' . $search . '%')
+                ->orWhere('ville', 'like', '%' . $search . '%')
+                ->orWhere('quatier', 'like', '%' . $search . '%')
+                ->orWhere('rue', 'like', '%' . $search . '%');
+            });
+        }
+
+        return ( new CandidatCollection($candidats->paginate()))->additional($this->getResponseTemplate(Response::HTTP_OK));
+    }
 }

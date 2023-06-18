@@ -49,4 +49,26 @@ class EmployeurRechercheController extends Controller
         })->paginate();
         return ( new EmployeurCollection($employeurs))->additional($this->getResponseTemplate(Response::HTTP_OK));
     }
+
+    function globalSearch(string $search, string $location = null) {
+        $employeurs = Employeur::where('email','LIKE',"%{$search}%")
+        ->orWhere('nom','LIKE',"%{$search}%")->orWhereHas('secteurs', function (Builder $query) use ($search) {
+            $query->where('nom', 'like', '%' . $search . '%');
+        })->orWhereHas('metiers', function (Builder $query) use ($search) {
+            $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
+        })->orWhereHas('competences', function (Builder $query) use ($search) {
+            $query->where('nom', 'like', '%' . $search . '%')->orWhere('description', 'like', '%' . $search . '%');
+        });
+
+        if ($location) {
+            $employeurs = $employeurs->orWhereHas('localisations', function (Builder $query) use ($search) {
+                $query->where('pays', 'like', '%' . $search . '%')
+                ->orWhere('ville', 'like', '%' . $search . '%')
+                ->orWhere('quatier', 'like', '%' . $search . '%')
+                ->orWhere('rue', 'like', '%' . $search . '%');
+            });
+        }
+
+        return ( new EmployeurCollection($employeurs->paginate()))->additional($this->getResponseTemplate(Response::HTTP_OK));
+    }
 }
