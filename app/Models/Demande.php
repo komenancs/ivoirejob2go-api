@@ -54,11 +54,20 @@ class Demande extends Model
     {
         return $this->belongsToMany(Localisation::class, 'demande_localisation');
     }
+
+    public function candidatures()
+    {
+        return $this->hasMany(Candidature::class);
+    }
     
 
     public function competences()
     {
         return $this->belongsToMany(Competence::class, 'demande_competence');
+    }
+
+    public function candidats()  {
+        return $this->belongsToMany(Candidat::class, 'candidatures');
     }
 
 }

@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreignId('type_contrat_id')->constrained('type_contrats');
             $table->date('date_publication');
             $table->date('date_expiration');
-            $table->foreignId('user_create_id')->constrained('users');
-            $table->foreignId('user_update_id')->constrained('users');
+            $table->foreignId('user_create_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('user_update_id')->nullable()->constrained('users')->nullOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

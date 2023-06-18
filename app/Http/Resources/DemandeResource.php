@@ -28,6 +28,8 @@ class DemandeResource extends JsonResource
             'secteurs' => SecteurResource::collection($this->secteurs),
             'localisations' => LocalisationResource::collection($this->localisations),
             'competences' => CompetenceResource::collection($this->competences),
+            'candidats' => $this->candidats->count(),
+            'candidatures' => $this->candidatures->count(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

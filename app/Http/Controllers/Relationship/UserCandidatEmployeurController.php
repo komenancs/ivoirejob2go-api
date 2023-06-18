@@ -16,18 +16,20 @@ class UserCandidatEmployeurController extends Controller
     public function employeur(int $id) {
         $user = User::find($id);
         if ($user) {
-            return ( new EmployeurResource($user->employeur))->additional($this->getResponseTemplate(Response::HTTP_OK));
-        }else {
-            return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
+            if ($user->employeur) {
+                return ( new EmployeurResource($user->employeur))->additional($this->getResponseTemplate(Response::HTTP_OK));
+            }
         }
+        return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
     }
 
     public function candidat(int $id) {
         $user = User::find($id);
         if ($user) {
-            return ( new CandidatResource($user->candidat))->additional($this->getResponseTemplate(Response::HTTP_OK));
-        }else {
-            return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
+            if ($user->candidat) {
+                return ( new CandidatResource($user->candidat))->additional($this->getResponseTemplate(Response::HTTP_OK));
+            }
         }
+        return $this->getErrorResponse(Response::HTTP_NOT_FOUND, "Aucun élément correspondant.");
     }
 }

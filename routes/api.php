@@ -49,6 +49,7 @@ use App\Http\Controllers\Relationship\CompetenceCandidatController;
 use App\Http\Controllers\Relationship\TypeContratDemandeController;
 use App\Http\Controllers\Relationship\AbonnementEmployeurController;
 use App\Http\Controllers\Relationship\CandidatCandidatureController;
+use App\Http\Controllers\Relationship\DemandeCandidatController;
 use App\Http\Controllers\Relationship\DemandeLocalisationController;
 use App\Http\Controllers\Relationship\LocalisationDemandeController;
 use App\Http\Controllers\Relationship\LocalisationEmployeurController;
@@ -127,6 +128,9 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
     Route::get("demandes/{id}/competences", [DemandeCompetenceController::class, 'index']);
     Route::post("demandes/{id}/competences", [DemandeCompetenceController::class, 'store']);
     Route::delete("demandes/{id}/competences/{cpt_id}", [DemandeCompetenceController::class, 'destroy']);
+
+    Route::get("demandes/{id}/candidatures", [DemandeCandidatController::class, 'candidatures']);
+    Route::get("demandes/{id}/candidats", [DemandeCandidatController::class, 'candidats']);
 
     //Employeur
     Route::get("employeurs/{id}/secteurs", [EmployeurSecteurController::class, 'index']);
