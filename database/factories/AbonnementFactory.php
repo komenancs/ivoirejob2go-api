@@ -20,6 +20,7 @@ class AbonnementFactory extends Factory
     {
         return [
             'nom' => $this->faker->name(),
+            'type' => $this->faker->randomElement(['CANDIDAT', 'EMPLOYEUR']),
             'montant' => $this->faker->randomNumber(5),
             'nombre_demande' => $this->faker->randomDigit(),
             'description' => $this->faker->sentence(5),

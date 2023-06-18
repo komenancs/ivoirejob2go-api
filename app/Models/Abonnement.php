@@ -17,6 +17,7 @@ class Abonnement extends Model
     protected $fillable = [
         'nom',
         'montant',
+        'type',
         "nombre_demande",
         'description',
         'user_create_id',

@@ -17,6 +17,7 @@ class AbonnementResource extends JsonResource
         return [
             'id' => $this->id,
             'nom' => $this->nom,
+            'type' => $this->type,
             'montant' => $this->montant,
             'nombre_demande' => $this->nombre_demande,
             'description' => $this->description,

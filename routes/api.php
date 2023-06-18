@@ -1,31 +1,9 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Relationship\CandidatCandidatureController;
-use App\Http\Controllers\Relationship\CandidatCertificatController;
-use App\Http\Controllers\Relationship\CandidatCompetenceController;
-use App\Http\Controllers\Relationship\CandidatDemandeController;
-use App\Http\Controllers\Relationship\CandidatFormationController;
-use App\Http\Controllers\Relationship\CandidatMetierController;
-use App\Http\Controllers\Relationship\CompetenceCandidatController;
-use App\Http\Controllers\Relationship\DemandeCompetenceController;
-use App\Http\Controllers\Relationship\DemandeLocalisationController;
-use App\Http\Controllers\Relationship\DemandeMetierController;
-use App\Http\Controllers\Relationship\DemandeSecteurController;
-use App\Http\Controllers\Relationship\EmployeurSecteurController;
-use App\Http\Controllers\Relationship\LocalisationDemandeController;
-use App\Http\Controllers\Relationship\LocalisationEmployeurController;
-use App\Http\Controllers\Relationship\LocalisationUserController;
-use App\Http\Controllers\Relationship\MessagePjController;
-use App\Http\Controllers\Relationship\TypeCertificatCertificatController;
-use App\Http\Controllers\Relationship\TypeContratDemandeController;
-use App\Http\Controllers\Relationship\UserInboxController;
-use App\Http\Controllers\Relationship\UserNotificationController;
-use App\Http\Controllers\Relationship\UserPaiementController;
-use App\Http\Controllers\Relationship\UserSentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PjController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MetierController;
@@ -45,13 +23,37 @@ use App\Http\Controllers\CandidatureController;
 use App\Http\Controllers\TypeContratController;
 use App\Http\Controllers\LocalisationController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\Recherche\CandidatRechercheController;
-use App\Http\Controllers\Recherche\DemandeRechercheController;
-use App\Http\Controllers\Recherche\EmployeurRechercheController;
-use App\Http\Controllers\Relationship\AbonnementCandidatController;
-use App\Http\Controllers\Relationship\AbonnementEmployeurController;
-use App\Http\Controllers\Relationship\UserCandidatEmployeurController;
+use App\Http\Controllers\Recherche\AbonnementRechercheController;
 use App\Http\Controllers\TypeCertificatController;
+use App\Http\Controllers\Relationship\UserSentController;
+use App\Http\Controllers\Relationship\MessagePjController;
+use App\Http\Controllers\Relationship\UserInboxController;
+use App\Http\Controllers\Relationship\UserPaiementController;
+use App\Http\Controllers\Recherche\DemandeRechercheController;
+use App\Http\Controllers\Relationship\DemandeMetierController;
+use App\Http\Controllers\Recherche\CandidatRechercheController;
+use App\Http\Controllers\Relationship\CandidatMetierController;
+use App\Http\Controllers\Relationship\DemandeSecteurController;
+use App\Http\Controllers\Recherche\EmployeurRechercheController;
+use App\Http\Controllers\Recherche\LocalisationRechercheController;
+use App\Http\Controllers\Relationship\CandidatDemandeController;
+use App\Http\Controllers\Relationship\EmployeurSecteurController;
+use App\Http\Controllers\Relationship\LocalisationUserController;
+use App\Http\Controllers\Relationship\UserNotificationController;
+use App\Http\Controllers\Relationship\CandidatFormationController;
+use App\Http\Controllers\Relationship\DemandeCompetenceController;
+use App\Http\Controllers\Relationship\AbonnementCandidatController;
+use App\Http\Controllers\Relationship\CandidatCertificatController;
+use App\Http\Controllers\Relationship\CandidatCompetenceController;
+use App\Http\Controllers\Relationship\CompetenceCandidatController;
+use App\Http\Controllers\Relationship\TypeContratDemandeController;
+use App\Http\Controllers\Relationship\AbonnementEmployeurController;
+use App\Http\Controllers\Relationship\CandidatCandidatureController;
+use App\Http\Controllers\Relationship\DemandeLocalisationController;
+use App\Http\Controllers\Relationship\LocalisationDemandeController;
+use App\Http\Controllers\Relationship\LocalisationEmployeurController;
+use App\Http\Controllers\Relationship\UserCandidatEmployeurController;
+use App\Http\Controllers\Relationship\TypeCertificatCertificatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,12 +82,12 @@ Route::group([
 });
 
 Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function () {
-//Route for model relationship
-//Abonnement
+    //Route for model relationship
+    //Abonnement
     Route::get('abonnements/{id}/candidats', [AbonnementCandidatController::class, 'index']);
     Route::get('abonnements/{id}/employeurs', [AbonnementEmployeurController::class, 'index']);
 
-//Candidat
+    //Candidat
     Route::get('candidats/{id}/candidatures', [CandidatCandidatureController::class, 'index']);
     Route::post('candidats/{id}/candidatures/', [CandidatCandidatureController::class, 'store']);
     Route::delete('candidats/{id}/candidatures/{cdt_id}', [CandidatCandidatureController::class, 'destroy']);
@@ -106,10 +108,10 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
     Route::post('candidats/{id}/metiers', [CandidatMetierController::class, 'store']);
     Route::delete('candidats/{id}/metiers/{mt_id}', [CandidatMetierController::class, 'destroy']);
 
-//Competence
+    //Competence
     Route::get('competences/{id}/candidats', [CompetenceCandidatController::class, 'index']);
 
-//Demande
+    //Demande
     Route::get("demandes/{id}/metiers", [DemandeMetierController::class, 'index']);
     Route::post("demandes/{id}/metiers", [DemandeMetierController::class, 'store']);
     Route::delete("demandes/{id}/metiers/{mt_id}", [DemandeMetierController::class, 'destroy']);
@@ -126,13 +128,13 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
     Route::post("demandes/{id}/competences", [DemandeCompetenceController::class, 'store']);
     Route::delete("demandes/{id}/competences/{cpt_id}", [DemandeCompetenceController::class, 'destroy']);
 
-//Employeur
+    //Employeur
     Route::get("employeurs/{id}/secteurs", [EmployeurSecteurController::class, 'index']);
     Route::post("employeurs/{id}/secteurs", [EmployeurSecteurController::class, 'store']);
     Route::delete("employeurs/{id}/secteurs/{sct_id}", [EmployeurSecteurController::class, 'destroy']);
 
 
-//Localisation
+    //Localisation
     Route::get("localisations/{id}/demandes", [LocalisationDemandeController::class, 'index']);
     Route::post("localisations/{id}/demandes", [LocalisationDemandeController::class, 'store']);
     Route::delete("localisations/{id}/demandes/dmd_id}", [LocalisationDemandeController::class, 'destroy']);
@@ -140,16 +142,16 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
     Route::get("localisations/{id}/employeurs", [LocalisationEmployeurController::class, 'index']);
 
     Route::get("localisations/{id}/users", [LocalisationUserController::class, 'index']);
-//Pj
+    //Pj
     Route::get("messages/{id}/pjs", [MessagePjController::class, 'index']);
 
-//TypeCertificats
+    //TypeCertificats
     Route::get('type-certificats/{id}/certificats', [TypeCertificatCertificatController::class, 'index']);
 
-//TypeContrat
+    //TypeContrat
     Route::get('type-contrats/{id}/demandes', [TypeContratDemandeController::class, 'index']);
 
-//User
+    //User
     Route::get('users/{id}/notifications', [UserNotificationController::class, 'index']);
 
     Route::get('users/{id}/paiements', [UserPaiementController::class, 'index']);
@@ -162,7 +164,7 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
 
     Route::get('users/{id}/employeurs', [UserCandidatEmployeurController::class, 'employeur']);
 
-// ApiRessource for model
+    // ApiRessource for model
     Route::apiResource('abonnements', AbonnementController::class);
     Route::apiResource('candidats', CandidatController::class);
     Route::apiResource('candidatures', CandidatureController::class);
@@ -185,7 +187,8 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
     Route::apiResource('type-contrats', TypeContratController::class);
     Route::apiResource('users', UserController::class);
 
-    Route::prefix("recherche")->group(function (){
+    //Search system
+    Route::prefix("recherche")->group(function () {
 
         //Demande
         Route::get("demandes/{search}", [DemandeRechercheController::class, 'rechercheParTitreEtParDescription']);
@@ -194,8 +197,9 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
         Route::get("demandes/competences/{search}", [DemandeRechercheController::class, 'rechercheParNomCompetences']);
         Route::get("demandes/localisations/{search}", [DemandeRechercheController::class, 'rechercheParLocalisations']);
         Route::get("demandes/type-contrats/{search}", [DemandeRechercheController::class, 'rechercheParNomTypeContrats']);
-        Route::get("demandes/global/{search}/localisation/{location?}",
-         [DemandeRechercheController::class, 'globalSearch']
+        Route::get(
+            "demandes/global/{search}/localisation/{location?}",
+            [DemandeRechercheController::class, 'globalSearch']
         );
 
         //Candidat
@@ -205,8 +209,9 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
         Route::get("candidats/competences/{search}", [CandidatRechercheController::class, 'rechercheParNomCompetences']);
         Route::get("candidats/localisations/{search}", [CandidatRechercheController::class, 'rechercheParLocalisations']);
         Route::get("candidats/certificats/{search}", [CandidatRechercheController::class, 'rechercheParCertificat']);
-        Route::get("candidats/global/{search}/localisation/{location?}",
-         [CandidatRechercheController::class, 'globalSearch']
+        Route::get(
+            "candidats/global/{search}/localisation/{location?}",
+            [CandidatRechercheController::class, 'globalSearch']
         );
 
         //Employeurs
@@ -215,9 +220,17 @@ Route::prefix('v1.0.1')->middleware(['throttle:60,1', 'api'])->group(function ()
         Route::get("employeurs/metiers/{search}", [EmployeurRechercheController::class, 'rechercheParNomMetiers']);
         Route::get("employeurs/competences/{search}", [EmployeurRechercheController::class, 'rechercheParNomCompetences']);
         Route::get("employeurs/localisations/{search}", [EmployeurRechercheController::class, 'rechercheParLocalisations']);
-        Route::get("employeurs/global/{search}/localisation/{location?}",
-        [EmployeurRechercheController::class, 'globalSearch']
-       );
+        Route::get(
+            "employeurs/global/{search}/localisation/{location?}",
+            [EmployeurRechercheController::class, 'globalSearch']
+        );
 
+        //Localisation
+        Route::get("localisations/all/{group_by?}", [LocalisationRechercheController::class, 'groupByItem']);
+        Route::get("localisations/{pays}", [LocalisationRechercheController::class, 'searchByCountry']);
+
+        //Abonnements
+        Route::get("abonnements/all/{group_by?}", [AbonnementRechercheController::class,'groupByItem']);
+        Route::get("abonnements/{type}", [AbonnementRechercheController::class, 'searchByType']);
     });
 });
