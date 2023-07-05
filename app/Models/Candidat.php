@@ -48,6 +48,11 @@ class Candidat extends Model
         return $this->hasMany(Formation::class);
     }
 
+    public function experiences()
+    {
+        return $this->hasMany(Experience::class);
+    }
+
     public function competences()
     {
         return $this->belongsToMany(Competence::class, 'competence_candidat');

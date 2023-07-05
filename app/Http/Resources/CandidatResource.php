@@ -27,6 +27,7 @@ class CandidatResource extends JsonResource
             'competences' => CompetenceResource::collection($this->competences),
             'metiers' => MetierResource::collection($this->metiers),
             'demandes' => DemandeResource::collection($this->demandes),
+            'experiences' => ExperienceResource::collection($this->experiences),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
