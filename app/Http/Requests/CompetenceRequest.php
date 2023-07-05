@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\ApiResponser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,6 +10,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CompetenceRequest extends FormRequest
 {
+    use ApiResponser;
     /**
      * Determine if the user is authorized to make this request.
      */
